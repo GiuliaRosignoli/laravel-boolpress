@@ -81,19 +81,11 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    Non riesco ad andare avanti! Mi dice che non trova una colonna!!!
                 </div>
+                <p>SQLSTATE[42S22]: Column not found: 1054 Unknown column 'updated_at' in 'field list' (SQL: insert into `posts` (`title`, `slug`, `content`, `updated_at`, `created_at`) values (Post title 1, post-title-1, dfkjfjfjf  hfhfdhfhfhfhgfhg  eejjdjfjfd ewerorlgklfj jdfngfnberbeb dndnenen, 2021-06-16 15:57:08, 2021-06-16 15:57:08))</p>
 
-                <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://vapor.laravel.com">Vapor</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
+                
             </div>
         </div>
     </body>
