@@ -18,8 +18,7 @@ class PostsTableSeeder extends Seeder
 
             $new_post->title = 'Post title ' . ($i + 1);
             $new_post->slug = Str::slug($new_post->title, '-');
-            $new_post->content = 'dfkjfjfjf  hfhfdhfhfhfhgfhg  eejjdjfjfd ewerorlgklfj jdfngfnberbeb dndnenen';
-
+            $new_post->content = 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Repudiandae ipsam optio quos perspiciatis consectetur nam, omnis delectus obcaecati dolore aperiam nesciunt facere nisi veniam placeat tempora quia laboriosam maxime repellat.';
             $new_post->save();
         }
     }
