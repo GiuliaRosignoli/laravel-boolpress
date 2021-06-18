@@ -81,10 +81,9 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Non riesco ad andare avanti! Mi dice che non trova una colonna!!!
+                    <h3>The error has been fixed</h3>
                 </div>
-                <p>SQLSTATE[42S22]: Column not found: 1054 Unknown column 'updated_at' in 'field list' (SQL: insert into `posts` (`title`, `slug`, `content`, `updated_at`, `created_at`) values (Post title 1, post-title-1, dfkjfjfjf  hfhfdhfhfhfhgfhg  eejjdjfjfd ewerorlgklfj jdfngfnberbeb dndnenen, 2021-06-16 15:57:08, 2021-06-16 15:57:08))</p>
-
+                
                 
             </div>
         </div>

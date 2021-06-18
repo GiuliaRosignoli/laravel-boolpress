@@ -26,7 +26,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -48,7 +48,12 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+            $post = Post::find($id);
+            if(!$post){
+                abort(404);
+            }
+            return view('admin.posts.show', compact('post'));
+    
     }
 
     /**
@@ -57,10 +62,11 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
+    public function edit($id) {
+
         //
     }
+   
 
     /**
      * Update the specified resource in storage.
