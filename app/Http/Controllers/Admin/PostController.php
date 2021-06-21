@@ -56,9 +56,9 @@ class PostController extends Controller
 
         // instance
         $new_post = new POst();
-        $new_post = fill($data);
+        $new_post -> fill($data);
 
-        $new_post = save();
+        $new_post -> save();
         return  redirect()->route('admin.posts.show', $new_post->id );
     }
 
@@ -84,7 +84,7 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id) {
+    public function edit(Post $post) {
         return view('admin.posts.edit', compact('post'));
     }
    

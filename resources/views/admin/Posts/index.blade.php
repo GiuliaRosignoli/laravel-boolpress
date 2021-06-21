@@ -28,7 +28,7 @@
                             <a class="btn btn-success" href="{{ route('admin.posts.show', $post->id ) }}">SHOW</a>
                         </td>
                         <td>
-                            <a href="{{ route('posts.edit', $post->id ),  }}">EDIT</a>
+                            <a class="btn btn-warning" href="{{ route('admin.posts.edit', $post->id ),  }}">EDIT</a>
                         </td>
                         <td>
                             <form class="delete-post-form" action="{{ route('admin.posts.destroy', $post->id) }}" method="POST">

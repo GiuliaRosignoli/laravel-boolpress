@@ -10,7 +10,9 @@
     </head>
     <body>
         <div id="root"> 
-
+            <h1>Homepage</h1>
+            <div> - Under Construction - We apologise for the inconvenience!</div>
+            <a href="{{ route('login') }}">Login</a>
         </div>
 
 
