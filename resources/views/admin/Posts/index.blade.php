@@ -19,7 +19,7 @@
                         <td>
                             <a class="btn btn-success" href="{{ route('admin.posts.show', $post->id ) }}">SHOW</a>
                         </td>
-                        <td>EDIT</td>
+                        <td><a href="{{ route('posts.edit', $post->id ),  }}">EDIT</a></td>
                         <td>DELETE</td>
                     </tr>
                 @endforeach

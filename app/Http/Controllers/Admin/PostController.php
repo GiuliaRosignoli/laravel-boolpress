@@ -63,8 +63,8 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id) {
-
-        //
+        
+        
     }
    
 
@@ -77,7 +77,13 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->all();
+
+        $post = Post::find($id);
+        $post['slug'] = str::slug($data['title'], '-');
+        $post->update($data);
+
+        return redirect()->route('posts.show', $post->id);
     }
 
     /**
