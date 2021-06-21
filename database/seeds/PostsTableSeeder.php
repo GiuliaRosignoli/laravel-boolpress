@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
+use Faker\Generator as Faker;
 use App\Post;
 
 class PostsTableSeeder extends Seeder
@@ -13,12 +14,13 @@ class PostsTableSeeder extends Seeder
      */
     public function run()
     {
-        for($i = 0; $i < 5; $i ++){
+        for($i = 0; $i < 15; $i ++){
             $new_post = new Post();
 
-            $new_post->title = 'Post title ' . ($i + 1);
+            $new_post->title = $faker->words(2, true);
             $new_post->slug = Str::slug($new_post->title, '-');
-            $new_post->content = 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Repudiandae ipsam optio quos perspiciatis consectetur nam, omnis delectus obcaecati dolore aperiam nesciunt facere nisi veniam placeat tempora quia laboriosam maxime repellat.';
+            $new_post->content = $faker->paragraph(2, false);
+            
             $new_post->save();
         }
     }

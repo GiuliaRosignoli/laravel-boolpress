@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\support\Str;
+use Illuminate\Validation\Rule;
 use App\Post;
 
 class PostController extends Controller
@@ -26,7 +28,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        
+        return view('admin.posts.create');
     }
 
     /**
@@ -37,7 +39,27 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title'=>'required|unique:posts|max:5',
+            'content'=> 'required',
+        ], [
+            'required'=> 'The :attribute is required!',
+            'unique'=> 'The attribute has already been used',
+            'max'=> 'Max :max number of characters allowed for the :attribute',
+
+        ]);
+
+        $data = $request->all();
+
+        //slug - creation
+        $data['slug'] = Str::slug($data['title'], '-');
+
+        // instance
+        $new_post = new POst();
+        $new_post = fill($data);
+
+        $new_post = save();
+        return  redirect()->route('admin.posts.show', $new_post->id );
     }
 
     /**
@@ -63,8 +85,7 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id) {
-        
-        
+        return view('admin.posts.edit', compact('post'));
     }
    
 
@@ -77,13 +98,29 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'title'=>[
+                'required',
+                Rule::unique('posts')->ignore($id),
+                'max:255',
+            ],
+            'content'=>'required',
+        ], [
+            'required'=>'The :attribute is required!',
+            'unique'=>'The :attribute has already been used',
+            'max'=>'Max :max number of characters allowed for the attribute',
+        ]);
+
         $data = $request->all();
-
         $post = Post::find($id);
-        $post['slug'] = str::slug($data['title'], '-');
-        $post->update($data);
 
-        return redirect()->route('posts.show', $post->id);
+        if($data['title'] != $post->title){
+            $data['slug'] = Str::slug($data['title'], '-');
+        }
+
+        $post->update($data); //fillable
+        
+        return redirect()->route('admin.posts.show', $post->id);
     }
 
     /**
@@ -94,6 +131,9 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::find($id);
+        $post->delete();
+
+        return redirect()->route('admin.posts.index')->with('deleted', $post->title);
     }
 }
