@@ -25,7 +25,7 @@
                         <label for="title" class="form-label">Title</label>
                         <input type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="{{ old('title') }}" >
                         @error('title')
-                            <div>{{ $message }}</div>
+                            <div class="feedback">{{ $message }}</div>
                         @enderror
                     </div>
 
@@ -33,7 +33,24 @@
                         <label for="content" class="form-label">Content</label>
                         <textarea name="content" id="content"  rows="6" class="form-control @error('content') is-invalid @enderror">{{ old('content') }}</textarea>
                         @error('content')
-                            <div>{{ $message }}</div>
+                            <div class="feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="category_id">Category</label>
+                        <select class="form-control @error('category_id') is-invalid @enderror" 
+                            name="category_id" id="">
+                            <option value="">-- Select Category --</option>
+                            @foreach ($categories as $category)
+                                <option value="{{ $category->id }}"
+                                     @if($category->id == old('category_id')) selected @endif
+                                    >
+                                    {{ $category->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('category_id')
+                            <div class="feedback">{{ $message }}</div>
                         @enderror
                     </div>
 

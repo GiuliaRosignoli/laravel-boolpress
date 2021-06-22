@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\support\Str;
 use Illuminate\Validation\Rule;
 use App\Post;
+use App\Category;
+
 
 class PostController extends Controller
 {
@@ -28,7 +30,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('admin.posts.create');
+        $categories = Category::all();
+
+        return view('admin.posts.create', compact('categories'));
     }
 
     /**
@@ -40,8 +44,9 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title'=>'required|unique:posts|max:5',
+            'title'=>'required|unique:posts|max:25',
             'content'=> 'required',
+            'category_id'=>'nullable|exists:categories, id'
         ], [
             'required'=> 'The :attribute is required!',
             'unique'=> 'The attribute has already been used',
@@ -55,7 +60,7 @@ class PostController extends Controller
         $data['slug'] = Str::slug($data['title'], '-');
 
         // instance
-        $new_post = new POst();
+        $new_post = new Post();
         $new_post -> fill($data);
 
         $new_post -> save();
@@ -84,8 +89,15 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Post $post) {
-        return view('admin.posts.edit', compact('post'));
+    public function edit($id) {
+        $post = Post::find($id);
+        $categories = Category::all();
+
+        if(! $post) {
+            abort(404);
+        }
+
+        return view('admin.posts.edit', compact('post', 'categories'));
     }
    
 
@@ -105,6 +117,8 @@ class PostController extends Controller
                 'max:255',
             ],
             'content'=>'required',
+            'category_id'=>'nullable|exists:categories,id'
+
         ], [
             'required'=>'The :attribute is required!',
             'unique'=>'The :attribute has already been used',
