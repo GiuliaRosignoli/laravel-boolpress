@@ -12,6 +12,27 @@
                <a href="">Read more</a>
                
            </article>
+
+           <section class="navigation">
+               <button 
+               v-show="pagination.current > 1"
+               @click="getPosts(pagination.current - 1)"
+               >
+               Prev</button>
+
+               <button 
+               v-for="i in pagination.last" :key="`page-${i}`"
+               @click="getPosts(i)"
+               >
+               {{ i }}
+               </button>
+
+               <button
+               v-show="pagination.current < pagination.last"
+               @click ="getPosts(pagination.current + 1)"
+               >
+               Next</button>
+           </section>
         </div>
     </main>
    </div>
@@ -27,7 +48,8 @@ export default {
     },
     data() {
         return {
-            posts: []
+            posts: [],
+            pagination: {}
         }
     },
     created() {
@@ -35,12 +57,16 @@ export default {
      this.getPosts();
     },
     methods: {
-        getPosts() {
+        getPosts(page = 1) {
             // Get posts from API
-            axios.get('http://127.0.0.1:8000/api/posts')
+            axios.get(`http://127.0.0.1:8000/api/posts?page=${page}`)
             .then(res => {
                 console.log(res.data);
-                this.posts = res.data;
+                this.posts = res.data.data;
+                this.pagination = {
+                    current: res.data.current_page,
+                    last:res.data.last_page,
+                };
             })
             .catch(err =>{
                 console.log(err);

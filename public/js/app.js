@@ -1928,6 +1928,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'App',
@@ -1936,7 +1957,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      posts: []
+      posts: [],
+      pagination: {}
     };
   },
   created: function created() {
@@ -1947,10 +1969,15 @@ __webpack_require__.r(__webpack_exports__);
     getPosts: function getPosts() {
       var _this = this;
 
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
       // Get posts from API
-      axios.get('http://127.0.0.1:8000/api/posts').then(function (res) {
+      axios.get("http://127.0.0.1:8000/api/posts?page=".concat(page)).then(function (res) {
         console.log(res.data);
-        _this.posts = res.data;
+        _this.posts = res.data.data;
+        _this.pagination = {
+          current: res.data.current_page,
+          last: res.data.last_page
+        };
       })["catch"](function (err) {
         console.log(err);
       });
@@ -38302,7 +38329,69 @@ var render = function() {
                 _vm._v(" "),
                 _c("a", { attrs: { href: "" } }, [_vm._v("Read more")])
               ])
-            })
+            }),
+            _vm._v(" "),
+            _c(
+              "section",
+              { staticClass: "navigation" },
+              [
+                _c(
+                  "button",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.pagination.current > 1,
+                        expression: "pagination.current > 1"
+                      }
+                    ],
+                    on: {
+                      click: function($event) {
+                        return _vm.getPosts(_vm.pagination.current - 1)
+                      }
+                    }
+                  },
+                  [_vm._v("\n            Prev")]
+                ),
+                _vm._v(" "),
+                _vm._l(_vm.pagination.last, function(i) {
+                  return _c(
+                    "button",
+                    {
+                      key: "page-" + i,
+                      on: {
+                        click: function($event) {
+                          return _vm.getPosts(i)
+                        }
+                      }
+                    },
+                    [_vm._v("\n            " + _vm._s(i) + "\n            ")]
+                  )
+                }),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.pagination.current < _vm.pagination.last,
+                        expression: "pagination.current < pagination.last"
+                      }
+                    ],
+                    on: {
+                      click: function($event) {
+                        return _vm.getPosts(_vm.pagination.current + 1)
+                      }
+                    }
+                  },
+                  [_vm._v("\n            Next")]
+                )
+              ],
+              2
+            )
           ],
           2
         )
